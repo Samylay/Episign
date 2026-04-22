@@ -1,6 +1,7 @@
 import Foundation
 import CoreNFC
 
+@MainActor
 class NFCService: NSObject, ObservableObject, NFCTagReaderSessionDelegate {
     @Published var scannedID: String?
     @Published var isScanning = false
@@ -23,10 +24,10 @@ class NFCService: NSObject, ObservableObject, NFCTagReaderSessionDelegate {
 
     // MARK: - NFCTagReaderSessionDelegate
 
-    func tagReaderSessionDidBecomeActive(_ session: NFCTagReaderSession) {}
+    nonisolated func tagReaderSessionDidBecomeActive(_ session: NFCTagReaderSession) {}
 
-    func tagReaderSession(_ session: NFCTagReaderSession, didInvalidateWithError error: Error) {
-        DispatchQueue.main.async {
+    nonisolated func tagReaderSession(_ session: NFCTagReaderSession, didInvalidateWithError error: Error) {
+        Task { @MainActor in
             self.isScanning = false
             if let err = error as? NFCReaderError,
                err.code == .readerSessionInvalidationErrorUserCanceled ||
@@ -39,17 +40,16 @@ class NFCService: NSObject, ObservableObject, NFCTagReaderSessionDelegate {
         }
     }
 
-    func tagReaderSession(_ session: NFCTagReaderSession, didDetect tags: [NFCTag]) {
+    nonisolated func tagReaderSession(_ session: NFCTagReaderSession, didDetect tags: [NFCTag]) {
         guard let tag = tags.first else { return }
 
         session.connect(to: tag) { [weak self] error in
-            guard let self else { return }
             if let error {
                 session.invalidate(errorMessage: "Connection failed.")
-                DispatchQueue.main.async {
-                    self.isScanning = false
-                    self.onResult?(.failure(error))
-                    self.onResult = nil
+                Task { @MainActor [weak self] in
+                    self?.isScanning = false
+                    self?.onResult?(.failure(error))
+                    self?.onResult = nil
                 }
                 return
             }
@@ -66,11 +66,11 @@ class NFCService: NSObject, ObservableObject, NFCTagReaderSessionDelegate {
             session.alertMessage = "Card read successfully ✓"
             session.invalidate()
 
-            DispatchQueue.main.async {
-                self.isScanning = false
-                self.scannedID = identifier
-                self.onResult?(.success(identifier))
-                self.onResult = nil
+            Task { @MainActor [weak self] in
+                self?.isScanning = false
+                self?.scannedID = identifier
+                self?.onResult?(.success(identifier))
+                self?.onResult = nil
             }
         }
     }

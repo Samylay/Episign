@@ -1,0 +1,449 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0FA3EF43210D169ECCC56A13 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75CBF2A8B643B9B6853FEA0 /* MainTabView.swift */; };
+		15A3DA1346FC5839840771FE /* AttendanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9C916F74BEF1AEE0CFF4FC /* AttendanceView.swift */; };
+		3625AD4FDF8B79CBB1217D92 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B8DD4FCDB4E9E09F66113D /* AuthService.swift */; };
+		39A8C0AB6AA51FE14624D2A9 /* CourseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2496D99DC3C11DA7AD74C1 /* CourseDetailView.swift */; };
+		3BC879A10926350824C05819 /* StudentConfirmStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC62BE3D14B105BE1337C5E /* StudentConfirmStepView.swift */; };
+		3D5514025463C0D707A80331 /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAED15BF89E614AA5B0256C /* DesignSystem.swift */; };
+		4121D6D0895CF0F75D9F1E63 /* CheckInFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597745C49D4CBE714A8122F6 /* CheckInFlowView.swift */; };
+		47EBDA31334BD149303E691D /* EpisignApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8BE73D248ED697CA0FD7D4 /* EpisignApp.swift */; };
+		4B617388369503026408BA97 /* SETUP.md in Resources */ = {isa = PBXBuildFile; fileRef = F818A6DC9ACEF69F48406CCF /* SETUP.md */; };
+		5D94DD29D2C3C3606EBA39C9 /* TeacherScanStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E80CD9E333753FDF36E076 /* TeacherScanStepView.swift */; };
+		69AD94A582BDA2EAA38DE1D8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09301ED5E00298EA0111E6E3 /* ContentView.swift */; };
+		7915AD99CCBBFD81BCF95D60 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47A4E2172C429B8FC31FF6E /* Session.swift */; };
+		7ADD11B698B4D749AA046BC0 /* NFCService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A65E363939681DC8E0A62E3 /* NFCService.swift */; };
+		A5D94F6E21BCC1A993F1C311 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85323B0BAE7D8794BC700AEA /* User.swift */; };
+		AB057E9E13DC1049AB50508F /* AttendanceRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26626D0C987B7793993A46BA /* AttendanceRecord.swift */; };
+		B0F45CCCE7A11B982E02C52F /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700048815B19728F30B06A2E /* DashboardView.swift */; };
+		B4748519E7B9CA603D3DB8AB /* FaceIDStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F679C648B22C72612D414479 /* FaceIDStepView.swift */; };
+		E75250D6BF283B9E5CFDB535 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C6434983B85A5628B99D1C /* ProfileView.swift */; };
+		F20F255A9A403EACB1C048B1 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740E75583055280A9DA5E93E /* AuthView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		09301ED5E00298EA0111E6E3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		0A2496D99DC3C11DA7AD74C1 /* CourseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailView.swift; sourceTree = "<group>"; };
+		0F8BE73D248ED697CA0FD7D4 /* EpisignApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisignApp.swift; sourceTree = "<group>"; };
+		26626D0C987B7793993A46BA /* AttendanceRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceRecord.swift; sourceTree = "<group>"; };
+		2894CF330D01CF8325D03FA8 /* EpisignApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EpisignApp.entitlements; sourceTree = "<group>"; };
+		2A65E363939681DC8E0A62E3 /* NFCService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFCService.swift; sourceTree = "<group>"; };
+		597745C49D4CBE714A8122F6 /* CheckInFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInFlowView.swift; sourceTree = "<group>"; };
+		700048815B19728F30B06A2E /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		740E75583055280A9DA5E93E /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		76C6434983B85A5628B99D1C /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		85323B0BAE7D8794BC700AEA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		8AC62BE3D14B105BE1337C5E /* StudentConfirmStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentConfirmStepView.swift; sourceTree = "<group>"; };
+		8FD98F629039F4917533E6E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		A7B8DD4FCDB4E9E09F66113D /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		AD46ED2BACFCD7EAE45F2B0D /* Episign.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Episign.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D47A4E2172C429B8FC31FF6E /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		D7E80CD9E333753FDF36E076 /* TeacherScanStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherScanStepView.swift; sourceTree = "<group>"; };
+		DDAED15BF89E614AA5B0256C /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
+		EF9C916F74BEF1AEE0CFF4FC /* AttendanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceView.swift; sourceTree = "<group>"; };
+		F679C648B22C72612D414479 /* FaceIDStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceIDStepView.swift; sourceTree = "<group>"; };
+		F75CBF2A8B643B9B6853FEA0 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		F818A6DC9ACEF69F48406CCF /* SETUP.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = SETUP.md; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		3D45687D18E42013CF71A2D1 /* EpisignApp */ = {
+			isa = PBXGroup;
+			children = (
+				09301ED5E00298EA0111E6E3 /* ContentView.swift */,
+				DDAED15BF89E614AA5B0256C /* DesignSystem.swift */,
+				2894CF330D01CF8325D03FA8 /* EpisignApp.entitlements */,
+				0F8BE73D248ED697CA0FD7D4 /* EpisignApp.swift */,
+				8FD98F629039F4917533E6E5 /* Info.plist */,
+				F818A6DC9ACEF69F48406CCF /* SETUP.md */,
+				CD8452E2827CB550B9EF7918 /* Models */,
+				6787A5A1ABCABC1C965B8CCD /* Services */,
+				BBC33BD82A3F5FC0B07B721D /* Views */,
+			);
+			path = EpisignApp;
+			sourceTree = "<group>";
+		};
+		5725EFB4C9C57D2762D84396 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				740E75583055280A9DA5E93E /* AuthView.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		6787A5A1ABCABC1C965B8CCD /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A7B8DD4FCDB4E9E09F66113D /* AuthService.swift */,
+				2A65E363939681DC8E0A62E3 /* NFCService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		8B1E91CB7699B5D4DE33CF8E /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				76C6434983B85A5628B99D1C /* ProfileView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		91226A5D9083641B6F409496 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AD46ED2BACFCD7EAE45F2B0D /* Episign.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9176C7DE427AC96824611E78 /* CheckIn */ = {
+			isa = PBXGroup;
+			children = (
+				597745C49D4CBE714A8122F6 /* CheckInFlowView.swift */,
+				F679C648B22C72612D414479 /* FaceIDStepView.swift */,
+				8AC62BE3D14B105BE1337C5E /* StudentConfirmStepView.swift */,
+				D7E80CD9E333753FDF36E076 /* TeacherScanStepView.swift */,
+			);
+			path = CheckIn;
+			sourceTree = "<group>";
+		};
+		93984E2C92D06E8622C49835 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				EF9C916F74BEF1AEE0CFF4FC /* AttendanceView.swift */,
+			);
+			path = Analytics;
+			sourceTree = "<group>";
+		};
+		BBC33BD82A3F5FC0B07B721D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				93984E2C92D06E8622C49835 /* Analytics */,
+				5725EFB4C9C57D2762D84396 /* Auth */,
+				9176C7DE427AC96824611E78 /* CheckIn */,
+				F4CC987A1A2C1120526CB974 /* Dashboard */,
+				C15D06DD3132FA37893FE860 /* Main */,
+				8B1E91CB7699B5D4DE33CF8E /* Profile */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		C15D06DD3132FA37893FE860 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				F75CBF2A8B643B9B6853FEA0 /* MainTabView.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		CD8452E2827CB550B9EF7918 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				26626D0C987B7793993A46BA /* AttendanceRecord.swift */,
+				D47A4E2172C429B8FC31FF6E /* Session.swift */,
+				85323B0BAE7D8794BC700AEA /* User.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F4CC987A1A2C1120526CB974 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				0A2496D99DC3C11DA7AD74C1 /* CourseDetailView.swift */,
+				700048815B19728F30B06A2E /* DashboardView.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		FDB009B4734D6CC03BA77B33 = {
+			isa = PBXGroup;
+			children = (
+				3D45687D18E42013CF71A2D1 /* EpisignApp */,
+				91226A5D9083641B6F409496 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4DFDFF1AC271BE01E6148A58 /* Episign */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E790CF32E5C234B6371B2B61 /* Build configuration list for PBXNativeTarget "Episign" */;
+			buildPhases = (
+				DC5B33DD69C7A14F02FB0107 /* Sources */,
+				D09ED2D3C6555DEE8D7AC2D1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Episign;
+			packageProductDependencies = (
+			);
+			productName = Episign;
+			productReference = AD46ED2BACFCD7EAE45F2B0D /* Episign.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		24D213B34A2C33DD7BCEEED6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = 9B9C15B5C22BD4D37973DACD /* Build configuration list for PBXProject "Episign" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = FDB009B4734D6CC03BA77B33;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 91226A5D9083641B6F409496 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4DFDFF1AC271BE01E6148A58 /* Episign */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D09ED2D3C6555DEE8D7AC2D1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4B617388369503026408BA97 /* SETUP.md in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DC5B33DD69C7A14F02FB0107 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB057E9E13DC1049AB50508F /* AttendanceRecord.swift in Sources */,
+				15A3DA1346FC5839840771FE /* AttendanceView.swift in Sources */,
+				3625AD4FDF8B79CBB1217D92 /* AuthService.swift in Sources */,
+				F20F255A9A403EACB1C048B1 /* AuthView.swift in Sources */,
+				4121D6D0895CF0F75D9F1E63 /* CheckInFlowView.swift in Sources */,
+				69AD94A582BDA2EAA38DE1D8 /* ContentView.swift in Sources */,
+				39A8C0AB6AA51FE14624D2A9 /* CourseDetailView.swift in Sources */,
+				B0F45CCCE7A11B982E02C52F /* DashboardView.swift in Sources */,
+				3D5514025463C0D707A80331 /* DesignSystem.swift in Sources */,
+				47EBDA31334BD149303E691D /* EpisignApp.swift in Sources */,
+				B4748519E7B9CA603D3DB8AB /* FaceIDStepView.swift in Sources */,
+				0FA3EF43210D169ECCC56A13 /* MainTabView.swift in Sources */,
+				7ADD11B698B4D749AA046BC0 /* NFCService.swift in Sources */,
+				E75250D6BF283B9E5CFDB535 /* ProfileView.swift in Sources */,
+				7915AD99CCBBFD81BCF95D60 /* Session.swift in Sources */,
+				3BC879A10926350824C05819 /* StudentConfirmStepView.swift in Sources */,
+				5D94DD29D2C3C3606EBA39C9 /* TeacherScanStepView.swift in Sources */,
+				A5D94F6E21BCC1A993F1C311 /* User.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1D847EBE2F03FD7D75C2B81A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		23FA2D395151E23DFCACA346 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		8124C3E339356172E6625361 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_ENTITLEMENTS = EpisignApp/EpisignApp.entitlements;
+				CODE_SIGN_IDENTITY = "";
+				INFOPLIST_FILE = EpisignApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = fr.epita.episign;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D2B8535B0197AA52BEC8D944 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_ENTITLEMENTS = EpisignApp/EpisignApp.entitlements;
+				CODE_SIGN_IDENTITY = "";
+				INFOPLIST_FILE = EpisignApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = fr.epita.episign;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9B9C15B5C22BD4D37973DACD /* Build configuration list for PBXProject "Episign" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D847EBE2F03FD7D75C2B81A /* Debug */,
+				23FA2D395151E23DFCACA346 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E790CF32E5C234B6371B2B61 /* Build configuration list for PBXNativeTarget "Episign" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8124C3E339356172E6625361 /* Debug */,
+				D2B8535B0197AA52BEC8D944 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 24D213B34A2C33DD7BCEEED6 /* Project object */;
+}

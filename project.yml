@@ -1,0 +1,26 @@
+name: Episign
+options:
+  bundleIdPrefix: fr.epita
+  deploymentTarget:
+    iOS: "16.0"
+  xcodeVersion: "16.0"
+
+targets:
+  Episign:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: EpisignApp
+    info:
+      path: EpisignApp/Info.plist
+    entitlements:
+      path: EpisignApp/EpisignApp.entitlements
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: fr.epita.episign
+        SWIFT_VERSION: 6.0
+        INFOPLIST_FILE: EpisignApp/Info.plist
+        CODE_SIGN_IDENTITY: ""
+        CODE_SIGNING_REQUIRED: NO
+        CODE_SIGNING_ALLOWED: NO
