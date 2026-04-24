@@ -52,7 +52,8 @@ class AuthService: NSObject, ObservableObject {
                 throw AuthError.missingCode
             }
 
-            let tokens = try await exchangeCode(code, verifier: verifier)
+            var tokens = try await exchangeCode(code, verifier: verifier)
+            tokens.expiresAt = Date().addingTimeInterval(Double(tokens.expiresIn))
             try persist(tokens)
 
             let resolved = try await fetchUserInfo(token: tokens.accessToken)
@@ -140,12 +141,19 @@ class AuthService: NSObject, ObservableObject {
         let idToken: String?
         let refreshToken: String?
         let expiresIn: Int
+        var expiresAt: Date?
 
         enum CodingKeys: String, CodingKey {
             case accessToken  = "access_token"
             case idToken      = "id_token"
             case refreshToken = "refresh_token"
             case expiresIn    = "expires_in"
+            case expiresAt
+        }
+
+        var isExpired: Bool {
+            guard let expiresAt else { return true }
+            return Date() >= expiresAt.addingTimeInterval(-60)
         }
     }
 
@@ -168,6 +176,38 @@ class AuthService: NSObject, ObservableObject {
 
         let (data, _) = try await URLSession.shared.data(for: req)
         return try JSONDecoder().decode(TokenResponse.self, from: data)
+    }
+
+    private func refreshTokens(_ tokens: TokenResponse) async throws -> TokenResponse {
+        guard let refreshToken = tokens.refreshToken else { throw AuthError.noRefreshToken }
+
+        var req = URLRequest(url: tokenURL)
+        req.httpMethod = "POST"
+        req.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+
+        let params: [String: String] = [
+            "grant_type":    "refresh_token",
+            "refresh_token": refreshToken,
+            "client_id":     clientID,
+        ]
+        req.httpBody = params
+            .map { "\($0.key)=\($0.value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")" }
+            .joined(separator: "&")
+            .data(using: .utf8)
+
+        let (data, _) = try await URLSession.shared.data(for: req)
+        var refreshed = try JSONDecoder().decode(TokenResponse.self, from: data)
+        refreshed.expiresAt = Date().addingTimeInterval(Double(refreshed.expiresIn))
+        if refreshed.refreshToken == nil {
+            return TokenResponse(
+                accessToken: refreshed.accessToken,
+                idToken: refreshed.idToken,
+                refreshToken: tokens.refreshToken,
+                expiresIn: refreshed.expiresIn,
+                expiresAt: refreshed.expiresAt
+            )
+        }
+        return refreshed
     }
 
     // MARK: - UserInfo
@@ -235,12 +275,16 @@ class AuthService: NSObject, ObservableObject {
         var ref: AnyObject?
         guard SecItemCopyMatching(q as CFDictionary, &ref) == errSecSuccess,
               let data = ref as? Data,
-              let tokens = try? JSONDecoder().decode(TokenResponse.self, from: data),
+              var tokens = try? JSONDecoder().decode(TokenResponse.self, from: data),
               !tokens.accessToken.isEmpty
         else { return }
 
         Task {
             do {
+                if tokens.isExpired {
+                    tokens = try await refreshTokens(tokens)
+                    try persist(tokens)
+                }
                 let resolved = try await fetchUserInfo(token: tokens.accessToken)
                 self.user = resolved
                 self.isAuthenticated = true
@@ -275,6 +319,7 @@ class AuthService: NSObject, ObservableObject {
         case stateMismatch
         case badUserInfo
         case keychainWrite(OSStatus)
+        case noRefreshToken
 
         var errorDescription: String? {
             switch self {
@@ -282,6 +327,7 @@ class AuthService: NSObject, ObservableObject {
             case .stateMismatch:    return "Security check failed. Please try signing in again."
             case .badUserInfo:      return "Could not parse user information from ForgeID."
             case .keychainWrite(let s): return "Keychain error \(s)."
+            case .noRefreshToken:   return "Session expired. Please sign in again."
             }
         }
     }
