@@ -15,6 +15,10 @@ class AuthService: NSObject, ObservableObject {
     private let authURL       = URL(string: "https://cri.epita.fr/authorize")!
     private let tokenURL      = URL(string: "https://cri.epita.fr/token")!
     private let userInfoURL   = URL(string: "https://cri.epita.fr/userinfo")!
+    // Custom scheme registered in Info.plist (CFBundleURLSchemes).
+    // The Forge test client (id 125070) only allows localhost redirect URIs.
+    // Request a production Forge client at https://docs.forge.epita.fr/services/forge-id/
+    // and register episign://callback before shipping.
     private let redirectURI   = "episign://callback"
     private let scopes        = "openid profile email epita"
 
