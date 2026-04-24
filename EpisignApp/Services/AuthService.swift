@@ -10,17 +10,14 @@ class AuthService: NSObject, ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: String?
 
-    // ForgeID OIDC — use test credentials in dev; request production client for release
-    private let clientID      = "125070"
+    // ForgeID OIDC — assistants-atelier-js is the APPING1 course client.
+    // episign://callback must be added to its allowed redirect URIs by EPITA.
+    private let clientID      = "assistants-atelier-js"
     private let authURL       = URL(string: "https://cri.epita.fr/authorize")!
     private let tokenURL      = URL(string: "https://cri.epita.fr/token")!
     private let userInfoURL   = URL(string: "https://cri.epita.fr/userinfo")!
-    // Custom scheme registered in Info.plist (CFBundleURLSchemes).
-    // The Forge test client (id 125070) only allows localhost redirect URIs.
-    // Request a production Forge client at https://docs.forge.epita.fr/services/forge-id/
-    // and register episign://callback before shipping.
     private let redirectURI   = "episign://callback"
-    private let scopes        = "openid profile email epita"
+    private let scopes        = "openid profile email epita picture"
 
     private var webAuthSession: ASWebAuthenticationSession?
     private var pendingVerifier: String?
@@ -244,10 +241,13 @@ class AuthService: NSObject, ObservableObject {
         }
 
         let gradYears = json["graduation_years"] as? [Int]
+        let picturePath = json["picture_square"] as? String
+        let pictureURL = picturePath.flatMap { URL(string: "https://cri.epita.fr\($0)") }
 
         return EpisignUser(
             login: login, email: email, firstName: firstName, lastName: lastName,
-            uid: uid, gid: gid, groups: groups, graduationYear: gradYears?.first
+            uid: uid, gid: gid, groups: groups, graduationYear: gradYears?.first,
+            pictureURL: pictureURL
         )
     }
 

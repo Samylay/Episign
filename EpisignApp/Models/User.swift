@@ -9,6 +9,7 @@ struct EpisignUser: Codable {
     let gid: Int
     let groups: [Group]
     let graduationYear: Int?
+    let pictureURL: URL?
 
     var displayName: String { "\(firstName) \(lastName)" }
 
