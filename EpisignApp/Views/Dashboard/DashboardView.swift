@@ -27,6 +27,20 @@ struct DashboardView: View {
         }
     }
 
+    @State private var showNotifications = false
+
+    private var todayDayName: String {
+        let f = DateFormatter()
+        f.dateFormat = "EEEE"
+        return f.string(from: Date())
+    }
+
+    private var todayDateLabel: String {
+        let f = DateFormatter()
+        f.dateFormat = "d MMMM"
+        return f.string(from: Date())
+    }
+
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
@@ -36,7 +50,7 @@ struct DashboardView: View {
                     VStack(alignment: .leading, spacing: 14) {
                         // Date header
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("Monday, 21 April")
+                            Text("\(todayDayName), \(todayDateLabel)")
                                 .font(.system(size: 12.5, weight: .medium))
                                 .foregroundColor(.forgeMuted)
                             Text("Today")
@@ -75,6 +89,11 @@ struct DashboardView: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
+            .alert("Notifications", isPresented: $showNotifications) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text("No new notifications.")
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     HStack(spacing: 8) {
@@ -87,6 +106,7 @@ struct DashboardView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
+                        showNotifications = true
                     } label: {
                         Image(systemName: "bell")
                             .font(.system(size: 17, weight: .medium))
