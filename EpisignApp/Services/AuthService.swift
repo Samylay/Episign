@@ -20,6 +20,7 @@ class AuthService: NSObject, ObservableObject {
 
     private var webAuthSession: ASWebAuthenticationSession?
     private var pendingVerifier: String?
+    private var pendingState: String?
 
     override init() {
         super.init()
@@ -35,9 +36,17 @@ class AuthService: NSObject, ObservableObject {
         do {
             let (verifier, challenge) = makePKCE()
             pendingVerifier = verifier
+            let state = UUID().uuidString
+            pendingState = state
 
-            let authorizationURL = buildAuthURL(challenge: challenge)
+            let authorizationURL = buildAuthURL(challenge: challenge, state: state)
             let callbackURL = try await openWebAuth(url: authorizationURL)
+
+            let returnedState = urlQueryItem("state", in: callbackURL)
+            guard returnedState == pendingState else {
+                throw AuthError.stateMismatch
+            }
+            pendingState = nil
 
             guard let code = urlQueryItem("code", in: callbackURL) else {
                 throw AuthError.missingCode
@@ -88,7 +97,7 @@ class AuthService: NSObject, ObservableObject {
 
     // MARK: - Auth URL
 
-    private func buildAuthURL(challenge: String) -> URL {
+    private func buildAuthURL(challenge: String, state: String) -> URL {
         var c = URLComponents(url: authURL, resolvingAgainstBaseURL: false)!
         c.queryItems = [
             URLQueryItem(name: "response_type",          value: "code"),
@@ -97,7 +106,7 @@ class AuthService: NSObject, ObservableObject {
             URLQueryItem(name: "scope",                  value: scopes),
             URLQueryItem(name: "code_challenge",         value: challenge),
             URLQueryItem(name: "code_challenge_method",  value: "S256"),
-            URLQueryItem(name: "state",                  value: UUID().uuidString),
+            URLQueryItem(name: "state",                  value: state),
         ]
         return c.url!
     }
@@ -263,12 +272,14 @@ class AuthService: NSObject, ObservableObject {
 
     enum AuthError: LocalizedError {
         case missingCode
+        case stateMismatch
         case badUserInfo
         case keychainWrite(OSStatus)
 
         var errorDescription: String? {
             switch self {
             case .missingCode:      return "No authorization code received from ForgeID."
+            case .stateMismatch:    return "Security check failed. Please try signing in again."
             case .badUserInfo:      return "Could not parse user information from ForgeID."
             case .keychainWrite(let s): return "Keychain error \(s)."
             }
