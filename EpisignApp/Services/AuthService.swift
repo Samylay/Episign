@@ -177,11 +177,9 @@ class AuthService: NSObject, ObservableObject {
         let firstName = json["given_name"] as? String ?? ""
         let lastName  = json["family_name"] as? String ?? ""
 
-        let epita = json["epita"] as? [String: Any] ?? [:]
-        let uid   = epita["uid"] as? Int ?? 0
-        let gid   = epita["gid"] as? Int ?? 0
-
-        let rawGroups = epita["groups"] as? [[String: Any]] ?? []
+        let uid       = json["uid"] as? Int ?? 0
+        let gid       = json["gid"] as? Int ?? 0
+        let rawGroups = json["groups"] as? [[String: Any]] ?? []
         let groups = rawGroups.compactMap { g -> EpisignUser.Group? in
             guard
                 let slug = g["slug"] as? String,
@@ -192,7 +190,7 @@ class AuthService: NSObject, ObservableObject {
             return EpisignUser.Group(slug: slug, name: name, gid: groupGid, kind: kind)
         }
 
-        let gradYears = epita["graduation_years"] as? [Int]
+        let gradYears = json["graduation_years"] as? [Int]
 
         return EpisignUser(
             login: login, email: email, firstName: firstName, lastName: lastName,
