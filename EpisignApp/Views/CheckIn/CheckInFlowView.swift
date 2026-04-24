@@ -19,7 +19,7 @@ class CheckInViewModel: ObservableObject {
     let session: CourseSession
     let nfc = NFCService()
 
-    var teacherName: String { "Dr. Claire Moreau" }
+    var teacherName: String { session.teacher }
 
     init(session: CourseSession) {
         self.session = session

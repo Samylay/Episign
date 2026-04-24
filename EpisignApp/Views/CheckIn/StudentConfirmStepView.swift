@@ -113,7 +113,7 @@ struct StudentConfirmStepView: View {
                         Divider().padding(.vertical, 14)
 
                         ReceiptRow(label: "Identity",     detail: "Face ID · verified",         done: true)
-                        ReceiptRow(label: "Teacher card", detail: "Dr. Claire Moreau · NFC",    done: true)
+                        ReceiptRow(label: "Teacher card", detail: "\(vm.teacherName) · NFC", done: true)
                         ReceiptRow(label: "Student card", detail: "\(auth.user?.displayName ?? "Student") · NFC", done: vm.studentCardID != nil)
                     }
                     .padding(18)

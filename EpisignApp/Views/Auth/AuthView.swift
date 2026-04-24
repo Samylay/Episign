@@ -2,6 +2,8 @@ import SwiftUI
 
 struct AuthView: View {
     @EnvironmentObject var auth: AuthService
+    @State private var showTerms = false
+    @State private var showPrivacy = false
 
     var body: some View {
         ZStack {
@@ -68,8 +70,10 @@ struct AuthView: View {
                         title: "Sign in with Microsoft",
                         secondary: true,
                         systemIcon: "square.grid.2x2.fill",
-                        action: { Task { await auth.signIn() } }
+                        action: {}
                     )
+                    .disabled(true)
+                    .opacity(0.45)
                 }
 
                 if let err = auth.errorMessage {
@@ -84,11 +88,11 @@ struct AuthView: View {
                 HStack(spacing: 4) {
                     Text("By signing in you agree to our")
                         .foregroundColor(.forgeMuted)
-                    Button("Terms") {}
+                    Button("Terms") { showTerms = true }
                         .foregroundColor(.forgeBrand)
                     Text("and")
                         .foregroundColor(.forgeMuted)
-                    Button("Privacy Policy") {}
+                    Button("Privacy Policy") { showPrivacy = true }
                         .foregroundColor(.forgeBrand)
                 }
                 .font(.system(size: 12))
@@ -97,6 +101,16 @@ struct AuthView: View {
             }
             .padding(.horizontal, 24)
             .padding(.bottom, 32)
+        }
+        .alert("Terms of Service", isPresented: $showTerms) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("Episign is an EPITA campus attendance system. Use is restricted to enrolled students and faculty.")
+        }
+        .alert("Privacy Policy", isPresented: $showPrivacy) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("Episign processes your biometric data locally only. Attendance records are stored on EPITA servers in accordance with GDPR.")
         }
     }
 }
