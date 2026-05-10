@@ -76,6 +76,27 @@ class AuthService: NSObject, ObservableObject {
         isLoading = false
     }
 
+    #if DEBUG
+    func signInMock() {
+        user = EpisignUser(
+            login: "samy.layaida",
+            email: "samy.layaida@epita.fr",
+            firstName: "Samy",
+            lastName: "Layaida",
+            uid: 30272,
+            gid: 15000,
+            groups: [
+                .init(slug: "prs",                    name: "Paris",                        gid: nil,   kind: "campus"),
+                .init(slug: "ing-app-ing2-s8-prs-dev-d2", name: "Apprentis S8 Paris DEV D2", gid: nil, kind: "class"),
+                .init(slug: "ing",                    name: "Cycle ingénieur",              gid: nil,   kind: "curriculum"),
+                .init(slug: "students",               name: "Étudiants",                   gid: 15000, kind: "other"),
+            ],
+            graduationYear: 2027
+        )
+        isAuthenticated = true
+    }
+    #endif
+
     func signOut() {
         clearKeychain()
         user = nil
@@ -233,18 +254,17 @@ class AuthService: NSObject, ObservableObject {
         let email     = json["email"] as? String ?? ""
         let firstName = json["given_name"] as? String ?? ""
         let lastName  = json["family_name"] as? String ?? ""
-
         let uid       = json["uid"] as? Int ?? 0
         let gid       = json["gid"] as? Int ?? 0
+
         let rawGroups = json["groups"] as? [[String: Any]] ?? []
         let groups = rawGroups.compactMap { g -> EpisignUser.Group? in
             guard
                 let slug = g["slug"] as? String,
                 let name = g["name"] as? String,
-                let kind = g["kind"] as? String,
-                let groupGid = g["gid"] as? Int
+                let kind = g["kind"] as? String
             else { return nil }
-            return EpisignUser.Group(slug: slug, name: name, gid: groupGid, kind: kind)
+            return EpisignUser.Group(slug: slug, name: name, gid: g["gid"] as? Int, kind: kind)
         }
 
         let gradYears = json["graduation_years"] as? [Int]

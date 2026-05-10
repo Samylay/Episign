@@ -76,6 +76,15 @@ struct AuthView: View {
                     .opacity(0.45)
                 }
 
+                #if DEBUG
+                Button("Skip login (dev)") {
+                    auth.signInMock()
+                }
+                .font(.system(size: 13))
+                .foregroundColor(.forgeMuted)
+                .padding(.top, 4)
+                #endif
+
                 if let err = auth.errorMessage {
                     Text(err)
                         .font(.system(size: 13))

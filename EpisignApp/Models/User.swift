@@ -27,7 +27,7 @@ struct EpisignUser: Codable {
     struct Group: Codable {
         let slug: String
         let name: String
-        let gid: Int
+        let gid: Int?
         let kind: String
     }
 }
