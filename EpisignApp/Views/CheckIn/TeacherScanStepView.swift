@@ -5,6 +5,9 @@ struct TeacherScanStepView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var ringScale: CGFloat = 1
     @State private var scanning = false
+    @State private var showCodeEntry = false
+    @State private var code = ""
+    @FocusState private var codeFocused: Bool
 
     var body: some View {
         ZStack {
@@ -146,30 +149,121 @@ struct TeacherScanStepView: View {
 
                 // Scan button + fallback
                 VStack(spacing: 12) {
-                    ForgeButton(title: "Scan NFC Badge", systemIcon: "wave.3.right", action: {
+                    ForgeButton(title: "Scanner le badge NFC", systemIcon: "wave.3.right", action: {
                         vm.scanTeacherCard()
                     })
-                    .disabled(vm.nfc.isScanning)
+                    .disabled(vm.nfc.isScanning || showCodeEntry)
 
+                    // Code fallback card
                     ForgeCard {
-                        HStack(spacing: 12) {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color.forgeTint)
-                                    .frame(width: 36, height: 36)
-                                Image(systemName: "qrcode")
-                                    .font(.system(size: 16))
-                                    .foregroundColor(.forgeBrand)
+                        VStack(spacing: 0) {
+                            // Header row — always visible
+                            Button(action: {
+                                withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                                    showCodeEntry.toggle()
+                                    if showCodeEntry { codeFocused = true }
+                                }
+                            }) {
+                                HStack(spacing: 12) {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .fill(Color.forgeTint)
+                                            .frame(width: 36, height: 36)
+                                        Image(systemName: "number.square")
+                                            .font(.system(size: 16))
+                                            .foregroundColor(.forgeBrand)
+                                    }
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text("Badge oublié ?")
+                                            .font(.system(size: 13, weight: .semibold))
+                                            .foregroundColor(.forgeInk)
+                                        Text("Entrer le code affiché par le prof")
+                                            .font(.system(size: 11.5))
+                                            .foregroundColor(.forgeMuted)
+                                    }
+                                    Spacer()
+                                    Image(systemName: showCodeEntry ? "chevron.up" : "chevron.down")
+                                        .font(.system(size: 12, weight: .semibold))
+                                        .foregroundColor(.forgeMuted)
+                                }
+                                .padding(14)
                             }
-                            Text("No NFC badge? ")
-                                .font(.system(size: 12.5))
-                                .foregroundColor(.forgeInk3)
-                            + Text("Scan QR instead")
-                                .font(.system(size: 12.5, weight: .semibold))
-                                .foregroundColor(.forgeBrand)
-                            Spacer()
+                            .buttonStyle(.plain)
+
+                            // Expanded code entry
+                            if showCodeEntry {
+                                Divider()
+                                    .padding(.horizontal, 14)
+
+                                VStack(spacing: 14) {
+                                    Text("Code à 6 chiffres affiché sur l'interface du formateur")
+                                        .font(.system(size: 12))
+                                        .foregroundColor(.forgeMuted)
+                                        .multilineTextAlignment(.center)
+                                        .padding(.horizontal, 8)
+
+                                    // OTP digit boxes
+                                    HStack(spacing: 8) {
+                                        ForEach(0..<6, id: \.self) { i in
+                                            let char: String = i < code.count
+                                                ? String(code[code.index(code.startIndex, offsetBy: i)])
+                                                : ""
+                                            ZStack {
+                                                RoundedRectangle(cornerRadius: 10)
+                                                    .fill(Color.forgeBg)
+                                                    .overlay(
+                                                        RoundedRectangle(cornerRadius: 10)
+                                                            .stroke(
+                                                                i == code.count
+                                                                    ? Color.forgeBrand
+                                                                    : Color.forgeHairline,
+                                                                lineWidth: i == code.count ? 1.5 : 1
+                                                            )
+                                                    )
+                                                Text(char)
+                                                    .font(.system(size: 22, weight: .bold, design: .monospaced))
+                                                    .foregroundColor(.forgeInk)
+                                            }
+                                            .frame(width: 42, height: 50)
+                                        }
+                                    }
+                                    // Hidden text field drives the input
+                                    .overlay(
+                                        TextField("", text: $code)
+                                            .keyboardType(.numberPad)
+                                            .focused($codeFocused)
+                                            .opacity(0.01)
+                                            .onChange(of: code) { newValue in
+                                                let filtered = String(newValue.filter(\.isNumber).prefix(6))
+                                                if filtered != newValue { code = filtered }
+                                            }
+                                    )
+
+                                    if let err = vm.errorMessage {
+                                        Text(err)
+                                            .font(.system(size: 12))
+                                            .foregroundColor(.forgeWarn)
+                                    }
+
+                                    Button(action: { vm.useSessionCode(code) }) {
+                                        HStack {
+                                            Spacer()
+                                            Text("Valider le code")
+                                                .font(.system(size: 14, weight: .semibold))
+                                            Spacer()
+                                        }
+                                        .padding(.vertical, 12)
+                                        .background(code.count == 6 ? Color.forgeBrand : Color.forgeMuted.opacity(0.3))
+                                        .foregroundColor(code.count == 6 ? .white : Color.forgeMuted)
+                                        .cornerRadius(10)
+                                    }
+                                    .disabled(code.count < 6)
+                                    .buttonStyle(.plain)
+                                }
+                                .padding(14)
+                                .transition(.move(edge: .top).combined(with: .opacity))
+                            }
                         }
-                        .padding(14)
                     }
                 }
                 .padding(.horizontal, 24)

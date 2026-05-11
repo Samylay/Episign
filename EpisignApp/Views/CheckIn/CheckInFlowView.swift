@@ -72,6 +72,17 @@ class CheckInViewModel: ObservableObject {
         }
     }
 
+    func useSessionCode(_ code: String) {
+        guard code.count == 6, code.allSatisfy(\.isNumber) else {
+            errorMessage = "Code invalide — 6 chiffres requis."
+            return
+        }
+        errorMessage = nil
+        // Store as a sentinel so the backend can distinguish NFC vs code auth
+        teacherCardID = "TOTP:\(code)"
+        withAnimation(.spring(response: 0.4)) { step = .confirm }
+    }
+
     // MARK: - Step 3: Confirm (auto-scans student card)
 
     func scanStudentCard() {
