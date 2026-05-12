@@ -12,6 +12,8 @@
 		3625AD4FDF8B79CBB1217D92 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B8DD4FCDB4E9E09F66113D /* AuthService.swift */; };
 		39A8C0AB6AA51FE14624D2A9 /* CourseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2496D99DC3C11DA7AD74C1 /* CourseDetailView.swift */; };
 		3BC879A10926350824C05819 /* StudentConfirmStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC62BE3D14B105BE1337C5E /* StudentConfirmStepView.swift */; };
+		21EFF7819339489C9D68A98E /* StudentCodeStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0010A80C184481FA0388E0B /* StudentCodeStepView.swift */; };
+		1DB06226D7454F95AE1462C5 /* SupabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A66F6DB804D41269C30ECCC /* SupabaseService.swift */; };
 		3D5514025463C0D707A80331 /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAED15BF89E614AA5B0256C /* DesignSystem.swift */; };
 		4121D6D0895CF0F75D9F1E63 /* CheckInFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597745C49D4CBE714A8122F6 /* CheckInFlowView.swift */; };
 		47EBDA31334BD149303E691D /* EpisignApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8BE73D248ED697CA0FD7D4 /* EpisignApp.swift */; };
@@ -41,6 +43,8 @@
 		76C6434983B85A5628B99D1C /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		85323B0BAE7D8794BC700AEA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		8AC62BE3D14B105BE1337C5E /* StudentConfirmStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentConfirmStepView.swift; sourceTree = "<group>"; };
+		C0010A80C184481FA0388E0B /* StudentCodeStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentCodeStepView.swift; sourceTree = "<group>"; };
+		5A66F6DB804D41269C30ECCC /* SupabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseService.swift; sourceTree = "<group>"; };
 		8FD98F629039F4917533E6E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A7B8DD4FCDB4E9E09F66113D /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		AD46ED2BACFCD7EAE45F2B0D /* Episign.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Episign.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,6 +87,7 @@
 			children = (
 				A7B8DD4FCDB4E9E09F66113D /* AuthService.swift */,
 				2A65E363939681DC8E0A62E3 /* NFCService.swift */,
+				5A66F6DB804D41269C30ECCC /* SupabaseService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -109,6 +114,7 @@
 				597745C49D4CBE714A8122F6 /* CheckInFlowView.swift */,
 				F679C648B22C72612D414479 /* FaceIDStepView.swift */,
 				8AC62BE3D14B105BE1337C5E /* StudentConfirmStepView.swift */,
+				C0010A80C184481FA0388E0B /* StudentCodeStepView.swift */,
 				D7E80CD9E333753FDF36E076 /* TeacherScanStepView.swift */,
 			);
 			path = CheckIn;
@@ -253,6 +259,8 @@
 				E75250D6BF283B9E5CFDB535 /* ProfileView.swift in Sources */,
 				7915AD99CCBBFD81BCF95D60 /* Session.swift in Sources */,
 				3BC879A10926350824C05819 /* StudentConfirmStepView.swift in Sources */,
+				21EFF7819339489C9D68A98E /* StudentCodeStepView.swift in Sources */,
+				1DB06226D7454F95AE1462C5 /* SupabaseService.swift in Sources */,
 				5D94DD29D2C3C3606EBA39C9 /* TeacherScanStepView.swift in Sources */,
 				A5D94F6E21BCC1A993F1C311 /* User.swift in Sources */,
 			);
