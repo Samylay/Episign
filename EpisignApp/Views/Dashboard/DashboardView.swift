@@ -15,10 +15,12 @@ enum DashboardFilter: CaseIterable {
 struct DashboardView: View {
     var initialFilter: DashboardFilter = .today
 
+    @EnvironmentObject var auth: AuthService
     @State private var filter: DashboardFilter = .today
     @State private var sessions: [CourseSession] = CourseSession.samples
     @State private var selected: CourseSession?
     @State private var showDetail = false
+    @State private var loadingError: String?
 
     var displayedSessions: [CourseSession] {
         switch filter {
@@ -122,7 +124,22 @@ struct DashboardView: View {
                 }
             }
         }
-        .onAppear { filter = initialFilter == .schedule ? .upcoming : .today }
+        .onAppear {
+            filter = initialFilter == .schedule ? .upcoming : .today
+            Task { await loadSessions() }
+        }
+    }
+
+    private func loadSessions() async {
+        guard let login = auth.user?.login else { return }
+        do {
+            let db = try await SupabaseService.shared.getStudentSessions(login: login)
+            if !db.isEmpty {
+                sessions = db.map { $0.toCourseSession() }
+            }
+        } catch {
+            loadingError = error.localizedDescription
+        }
     }
 }
 

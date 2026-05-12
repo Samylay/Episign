@@ -3,21 +3,22 @@ import LocalAuthentication
 
 enum CheckInStep: Int, CaseIterable {
     case faceID = 0
-    case teacherScan = 1
-    case confirm = 2
+    case teacherCode = 1
+    case studentCode = 2
+    case done = 3
 }
 
 @MainActor
 class CheckInViewModel: ObservableObject {
     @Published var step: CheckInStep = .faceID
     @Published var faceIDDone = false
-    @Published var teacherCardID: String?
-    @Published var studentCardID: String?
+    @Published var teacherCode = ""
+    @Published var studentCode = ""
     @Published var errorMessage: String?
     @Published var isProcessing = false
+    @Published var signedAt: Date?
 
     let session: CourseSession
-    let nfc = NFCService()
 
     var teacherName: String { session.teacher }
 
@@ -47,7 +48,7 @@ class CheckInViewModel: ObservableObject {
             )
             if success {
                 faceIDDone = true
-                withAnimation(.spring(response: 0.4)) { step = .teacherScan }
+                withAnimation(.spring(response: 0.4)) { step = .teacherCode }
             }
         } catch {
             errorMessage = error.localizedDescription
@@ -56,46 +57,43 @@ class CheckInViewModel: ObservableObject {
         isProcessing = false
     }
 
-    // MARK: - Step 2: Teacher NFC
+    // MARK: - Step 2: Teacher code
 
-    func scanTeacherCard() {
-        nfc.scan(prompt: "Hold iPhone near instructor's NFC badge") { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let id):
-                    self?.teacherCardID = id
-                    withAnimation(.spring(response: 0.4)) { self?.step = .confirm }
-                case .failure(let err):
-                    self?.errorMessage = err.localizedDescription
-                }
-            }
-        }
-    }
-
-    func useSessionCode(_ code: String) {
-        guard code.count == 6, code.allSatisfy(\.isNumber) else {
+    func confirmTeacherCode() {
+        guard teacherCode.count == 6, teacherCode.allSatisfy(\.isNumber) else {
             errorMessage = "Code invalide — 6 chiffres requis."
             return
         }
         errorMessage = nil
-        // Store as a sentinel so the backend can distinguish NFC vs code auth
-        teacherCardID = "TOTP:\(code)"
-        withAnimation(.spring(response: 0.4)) { step = .confirm }
+        withAnimation(.spring(response: 0.4)) { step = .studentCode }
     }
 
-    // MARK: - Step 3: Confirm (auto-scans student card)
+    // MARK: - Step 3: Student code + submit
 
-    func scanStudentCard() {
-        nfc.scan(prompt: "Tap your student card to complete check-in") { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let id):
-                    self?.studentCardID = id
-                case .failure(let err):
-                    self?.errorMessage = err.localizedDescription
-                }
-            }
+    func submitAttendance(forgeLogin: String) async {
+        guard studentCode.count == 6, studentCode.allSatisfy(\.isNumber) else {
+            errorMessage = "Code invalide — 6 chiffres requis."
+            return
         }
+        isProcessing = true
+        errorMessage = nil
+        do {
+            let result = try await SupabaseService.shared.submitAttendance(
+                forgeLogin: forgeLogin,
+                teacherCode: teacherCode,
+                studentCode: studentCode,
+                sessionId: session.id
+            )
+            if result.ok {
+                signedAt = Date()
+                withAnimation(.spring(response: 0.4)) { step = .done }
+            } else {
+                errorMessage = result.error ?? "Signature refusée. Vérifie ton code."
+            }
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+        isProcessing = false
     }
 }
 
@@ -113,9 +111,11 @@ struct CheckInFlowView: View {
         switch vm.step {
         case .faceID:
             FaceIDStepView(vm: vm)
-        case .teacherScan:
+        case .teacherCode:
             TeacherScanStepView(vm: vm)
-        case .confirm:
+        case .studentCode:
+            StudentCodeStepView(vm: vm)
+        case .done:
             StudentConfirmStepView(vm: vm, onDone: { dismiss() })
         }
     }

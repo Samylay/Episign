@@ -7,6 +7,7 @@ import Security
 class AuthService: NSObject, ObservableObject {
     @Published var isAuthenticated = false
     @Published var user: EpisignUser?
+    @Published var studentProfile: StudentProfile?
     @Published var isLoading = false
     @Published var errorMessage: String?
 
@@ -60,6 +61,12 @@ class AuthService: NSObject, ObservableObject {
             let resolved = try await fetchUserInfo(token: tokens.accessToken)
             user = resolved
             isAuthenticated = true
+            studentProfile = try? await SupabaseService.shared.upsertStudent(
+                login: resolved.login,
+                firstName: resolved.firstName,
+                lastName: resolved.lastName,
+                email: resolved.email
+            )
         } catch ASWebAuthenticationSessionError.canceledLogin {
             // User dismissed — no error toast
         } catch {
@@ -292,6 +299,12 @@ class AuthService: NSObject, ObservableObject {
                 let resolved = try await fetchUserInfo(token: tokens.accessToken)
                 self.user = resolved
                 self.isAuthenticated = true
+                self.studentProfile = try? await SupabaseService.shared.upsertStudent(
+                    login: resolved.login,
+                    firstName: resolved.firstName,
+                    lastName: resolved.lastName,
+                    email: resolved.email
+                )
             } catch {
                 self.clearKeychain()
             }

@@ -34,19 +34,9 @@
         </dict>
     </array>
 
-    <!-- NFC: Core NFC usage -->
-    <key>NFCReaderUsageDescription</key>
-    <string>Episign uses NFC to read teacher and student ID cards during attendance check-in.</string>
-
     <!-- Face ID / Touch ID usage -->
     <key>NSFaceIDUsageDescription</key>
     <string>Episign uses Face ID to verify your identity before signing attendance.</string>
-
-    <!-- NFC tag reader session formats (required entitlement in Xcode signing) -->
-    <key>com.apple.developer.nfc.readersession.formats</key>
-    <array>
-        <string>TAG</string>
-    </array>
 
     <!-- App Transport Security -->
     <key>NSAppTransportSecurity</key>
