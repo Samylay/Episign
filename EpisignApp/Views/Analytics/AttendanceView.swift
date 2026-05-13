@@ -25,10 +25,28 @@ struct AttendanceView: View {
             .navigationTitle("My attendance")
             .navigationBarTitleDisplayMode(.large)
         }
-        .task {
-            // Attendance history RPC not yet available — show empty state
-            isLoading = false
+        .task { await loadAttendance() }
+    }
+
+    // MARK: - Data loading
+
+    private func loadAttendance() async {
+        guard let login = auth.user?.login else { isLoading = false; return }
+        do {
+            let rows = try await SupabaseService.shared.getAttendanceHistory(login: login)
+            records = rows.map { $0.toAttendanceRecord() }
+            if !records.isEmpty {
+                let attended   = records.filter { $0.status == .attended }.count
+                let late       = records.filter { $0.status == .late }.count
+                let justified  = records.filter { $0.status == .absentJustified }.count
+                let unjust     = records.filter { $0.status == .absentUnjustified }.count
+                summary = AttendanceSummary(total: records.count, attended: attended, late: late,
+                                           absentJustified: justified, absentUnjustified: unjust)
+            }
+        } catch {
+            print("[AttendanceView] load error: \(error)")
         }
+        isLoading = false
     }
 
     // MARK: - Empty state

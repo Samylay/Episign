@@ -23,6 +23,39 @@ struct AttendanceResult: Codable {
     let error: String?
 }
 
+struct DBAttendanceRecord: Codable {
+    let sessionId: String
+    let sessionCode: String
+    let courseName: String
+    let slot: String
+    let status: String
+    let justification: String?
+    let date: String
+
+    enum CodingKeys: String, CodingKey {
+        case sessionId    = "session_id"
+        case sessionCode  = "session_code"
+        case courseName   = "course_name"
+        case slot
+        case status
+        case justification
+        case date
+    }
+
+    func toAttendanceRecord() -> AttendanceRecord {
+        let s: AttendanceRecord.Status
+        switch status {
+        case "present":             s = .attended
+        case "late":                s = .late
+        case "absent_justified":    s = .absentJustified
+        default:                    s = .absentUnjustified
+        }
+        return AttendanceRecord(id: "\(sessionId)-\(slot)", sessionCode: sessionCode,
+                                sessionName: courseName, date: date, status: s,
+                                justification: justification)
+    }
+}
+
 @MainActor
 class SupabaseService {
     static let shared = SupabaseService()
@@ -76,6 +109,11 @@ class SupabaseService {
             p_teacher_code: teacherCode
         ))
         return result.valid
+    }
+
+    func getAttendanceHistory(login: String) async throws -> [DBAttendanceRecord] {
+        struct P: Encodable { let p_forge_login: String }
+        return try await rpc("get_student_attendance_history", params: P(p_forge_login: login))
     }
 
     func submitAttendance(forgeLogin: String, teacherCode: String, studentCode: String, sessionId: String) async throws -> AttendanceResult {
