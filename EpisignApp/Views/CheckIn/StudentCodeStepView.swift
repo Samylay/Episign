@@ -93,6 +93,14 @@ struct StudentCodeStepView: View {
                             .opacity(0.01)
                         )
 
+                                #if DEBUG
+                        if let code = auth.studentProfile?.cardCode {
+                            Text("DEV · code: \(code)")
+                                .font(.system(size: 11, weight: .semibold, design: .monospaced))
+                                .foregroundColor(.forgeBrand)
+                        }
+                        #endif
+
                         if let err = vm.errorMessage {
                             Text(err)
                                 .font(.system(size: 12))

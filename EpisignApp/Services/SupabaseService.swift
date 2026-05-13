@@ -4,9 +4,9 @@ struct StudentProfile: Codable {
     let id: String
     let cardCode: String?
     let classId: String?
-    let firstName: String
-    let lastName: String
-    let email: String
+    let firstName: String?
+    let lastName: String?
+    let email: String?
 
     enum CodingKeys: String, CodingKey {
         case id

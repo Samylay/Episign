@@ -9,11 +9,11 @@
 /* Begin PBXBuildFile section */
 		0FA3EF43210D169ECCC56A13 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75CBF2A8B643B9B6853FEA0 /* MainTabView.swift */; };
 		15A3DA1346FC5839840771FE /* AttendanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9C916F74BEF1AEE0CFF4FC /* AttendanceView.swift */; };
+		1DB06226D7454F95AE1462C5 /* SupabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A66F6DB804D41269C30ECCC /* SupabaseService.swift */; };
+		21EFF7819339489C9D68A98E /* StudentCodeStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0010A80C184481FA0388E0B /* StudentCodeStepView.swift */; };
 		3625AD4FDF8B79CBB1217D92 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B8DD4FCDB4E9E09F66113D /* AuthService.swift */; };
 		39A8C0AB6AA51FE14624D2A9 /* CourseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2496D99DC3C11DA7AD74C1 /* CourseDetailView.swift */; };
 		3BC879A10926350824C05819 /* StudentConfirmStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC62BE3D14B105BE1337C5E /* StudentConfirmStepView.swift */; };
-		21EFF7819339489C9D68A98E /* StudentCodeStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0010A80C184481FA0388E0B /* StudentCodeStepView.swift */; };
-		1DB06226D7454F95AE1462C5 /* SupabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A66F6DB804D41269C30ECCC /* SupabaseService.swift */; };
 		3D5514025463C0D707A80331 /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAED15BF89E614AA5B0256C /* DesignSystem.swift */; };
 		4121D6D0895CF0F75D9F1E63 /* CheckInFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597745C49D4CBE714A8122F6 /* CheckInFlowView.swift */; };
 		47EBDA31334BD149303E691D /* EpisignApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8BE73D248ED697CA0FD7D4 /* EpisignApp.swift */; };
@@ -21,7 +21,6 @@
 		5D94DD29D2C3C3606EBA39C9 /* TeacherScanStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E80CD9E333753FDF36E076 /* TeacherScanStepView.swift */; };
 		69AD94A582BDA2EAA38DE1D8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09301ED5E00298EA0111E6E3 /* ContentView.swift */; };
 		7915AD99CCBBFD81BCF95D60 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47A4E2172C429B8FC31FF6E /* Session.swift */; };
-		7ADD11B698B4D749AA046BC0 /* NFCService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A65E363939681DC8E0A62E3 /* NFCService.swift */; };
 		A5D94F6E21BCC1A993F1C311 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85323B0BAE7D8794BC700AEA /* User.swift */; };
 		AB057E9E13DC1049AB50508F /* AttendanceRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26626D0C987B7793993A46BA /* AttendanceRecord.swift */; };
 		B0F45CCCE7A11B982E02C52F /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700048815B19728F30B06A2E /* DashboardView.swift */; };
@@ -36,18 +35,17 @@
 		0F8BE73D248ED697CA0FD7D4 /* EpisignApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisignApp.swift; sourceTree = "<group>"; };
 		26626D0C987B7793993A46BA /* AttendanceRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceRecord.swift; sourceTree = "<group>"; };
 		2894CF330D01CF8325D03FA8 /* EpisignApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EpisignApp.entitlements; sourceTree = "<group>"; };
-		2A65E363939681DC8E0A62E3 /* NFCService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFCService.swift; sourceTree = "<group>"; };
 		597745C49D4CBE714A8122F6 /* CheckInFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInFlowView.swift; sourceTree = "<group>"; };
+		5A66F6DB804D41269C30ECCC /* SupabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseService.swift; sourceTree = "<group>"; };
 		700048815B19728F30B06A2E /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		740E75583055280A9DA5E93E /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		76C6434983B85A5628B99D1C /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		85323B0BAE7D8794BC700AEA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		8AC62BE3D14B105BE1337C5E /* StudentConfirmStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentConfirmStepView.swift; sourceTree = "<group>"; };
-		C0010A80C184481FA0388E0B /* StudentCodeStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentCodeStepView.swift; sourceTree = "<group>"; };
-		5A66F6DB804D41269C30ECCC /* SupabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseService.swift; sourceTree = "<group>"; };
 		8FD98F629039F4917533E6E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A7B8DD4FCDB4E9E09F66113D /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
-		AD46ED2BACFCD7EAE45F2B0D /* Episign.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Episign.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD46ED2BACFCD7EAE45F2B0D /* Episign.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Episign.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0010A80C184481FA0388E0B /* StudentCodeStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentCodeStepView.swift; sourceTree = "<group>"; };
 		D47A4E2172C429B8FC31FF6E /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		D7E80CD9E333753FDF36E076 /* TeacherScanStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherScanStepView.swift; sourceTree = "<group>"; };
 		DDAED15BF89E614AA5B0256C /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
@@ -86,7 +84,6 @@
 			isa = PBXGroup;
 			children = (
 				A7B8DD4FCDB4E9E09F66113D /* AuthService.swift */,
-				2A65E363939681DC8E0A62E3 /* NFCService.swift */,
 				5A66F6DB804D41269C30ECCC /* SupabaseService.swift */,
 			);
 			path = Services;
@@ -205,8 +202,6 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1600;
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = 9B9C15B5C22BD4D37973DACD /* Build configuration list for PBXProject "Episign" */;
 			developmentRegion = en;
@@ -255,7 +250,6 @@
 				47EBDA31334BD149303E691D /* EpisignApp.swift in Sources */,
 				B4748519E7B9CA603D3DB8AB /* FaceIDStepView.swift in Sources */,
 				0FA3EF43210D169ECCC56A13 /* MainTabView.swift in Sources */,
-				7ADD11B698B4D749AA046BC0 /* NFCService.swift in Sources */,
 				E75250D6BF283B9E5CFDB535 /* ProfileView.swift in Sources */,
 				7915AD99CCBBFD81BCF95D60 /* Session.swift in Sources */,
 				3BC879A10926350824C05819 /* StudentConfirmStepView.swift in Sources */,
@@ -392,17 +386,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGNING_ALLOWED = NO;
-				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGNING_ALLOWED = YES;
+				CODE_SIGNING_REQUIRED = YES;
 				CODE_SIGN_ENTITLEMENTS = EpisignApp/EpisignApp.entitlements;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6R9W6TCBZ2;
 				INFOPLIST_FILE = EpisignApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = fr.epita.episign;
+				PRODUCT_BUNDLE_IDENTIFIER = com.samylayaida.episign;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -413,17 +410,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGNING_ALLOWED = NO;
-				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGNING_ALLOWED = YES;
+				CODE_SIGNING_REQUIRED = YES;
 				CODE_SIGN_ENTITLEMENTS = EpisignApp/EpisignApp.entitlements;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6R9W6TCBZ2;
 				INFOPLIST_FILE = EpisignApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = fr.epita.episign;
+				PRODUCT_BUNDLE_IDENTIFIER = com.samylayaida.episign;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
