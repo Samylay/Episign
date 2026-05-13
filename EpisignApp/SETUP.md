@@ -1,5 +1,7 @@
 # Episign iOS App — Setup
 
+> **Demo guide & known limitations** → see [`EPISIGN-BO/docs/DEMO.md`](https://github.com/Samylay/Episign-BO/blob/main/docs/DEMO.md)
+
 ## Xcode Project Creation
 
 1. Open Xcode → **File → New → Project**
