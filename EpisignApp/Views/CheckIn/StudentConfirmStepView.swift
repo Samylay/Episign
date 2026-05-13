@@ -11,6 +11,7 @@ struct StudentConfirmStepView: View {
         guard let date = vm.signedAt else { return "" }
         let f = DateFormatter()
         f.dateFormat = "HH:mm:ss"
+        f.timeZone = TimeZone(identifier: "Europe/Paris")
         return f.string(from: date)
     }
 

@@ -35,12 +35,14 @@ struct DashboardView: View {
     private var todayDayName: String {
         let f = DateFormatter()
         f.dateFormat = "EEEE"
+        f.timeZone = TimeZone(identifier: "Europe/Paris")
         return f.string(from: Date())
     }
 
     private var todayDateLabel: String {
         let f = DateFormatter()
         f.dateFormat = "d MMMM"
+        f.timeZone = TimeZone(identifier: "Europe/Paris")
         return f.string(from: Date())
     }
 

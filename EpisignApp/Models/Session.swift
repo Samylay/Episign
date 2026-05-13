@@ -36,12 +36,17 @@ struct DBSession: Codable, Identifiable {
 
         let isLive = now >= starts && now <= ends
 
+        let paris = TimeZone(identifier: "Europe/Paris")!
+
         let timeFmt = DateFormatter()
         timeFmt.dateFormat = "HH:mm"
+        timeFmt.timeZone = paris
         let timeRange = "\(timeFmt.string(from: starts)) – \(timeFmt.string(from: ends))"
 
         let dayFmt = DateFormatter()
-        let cal = Calendar.current
+        dayFmt.timeZone = paris
+        var cal = Calendar.current
+        cal.timeZone = paris
         let dateLabel: String
         if cal.isDateInToday(starts) {
             dateLabel = "Today"
