@@ -141,11 +141,15 @@ struct DashboardView: View {
                     }
                 }
             }
-            .sheet(isPresented: $showDetail) {
+            .sheet(isPresented: $showDetail, onDismiss: {
+                Task { await loadSessions() }
+            }) {
                 if let session = selected {
-                    CourseDetailView(session: session)
-                        .presentationDetents([.large])
-                        .presentationDragIndicator(.visible)
+                    CourseDetailView(session: session, onSigned: {
+                        Task { await loadSessions() }
+                    })
+                    .presentationDetents([.large])
+                    .presentationDragIndicator(.visible)
                 }
             }
         }

@@ -84,6 +84,8 @@ class CheckInViewModel: ObservableObject {
 
     // MARK: - Step 3: Student code + submit
 
+    var onSuccess: (() -> Void)?
+
     func submitAttendance(forgeLogin: String) async {
         guard studentCode.count == 6, studentCode.allSatisfy(\.isNumber) else {
             errorMessage = "Code invalide — 6 chiffres requis."
@@ -100,6 +102,7 @@ class CheckInViewModel: ObservableObject {
             )
             if result.ok {
                 signedAt = Date()
+                onSuccess?()
                 withAnimation(.spring(response: 0.4)) { step = .done }
             } else {
                 errorMessage = result.error ?? "Signature refusée. Vérifie ton code."
@@ -113,11 +116,13 @@ class CheckInViewModel: ObservableObject {
 
 struct CheckInFlowView: View {
     let session: CourseSession
+    var onSuccess: (() -> Void)? = nil
     @StateObject private var vm: CheckInViewModel
     @Environment(\.dismiss) private var dismiss
 
-    init(session: CourseSession) {
+    init(session: CourseSession, onSuccess: (() -> Void)? = nil) {
         self.session = session
+        self.onSuccess = onSuccess
         _vm = StateObject(wrappedValue: CheckInViewModel(session: session))
     }
 
@@ -133,4 +138,5 @@ struct CheckInFlowView: View {
             StudentConfirmStepView(vm: vm, onDone: { dismiss() })
         }
     }
+    .onAppear { vm.onSuccess = onSuccess }
 }

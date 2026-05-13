@@ -2,7 +2,9 @@ import SwiftUI
 
 struct CourseDetailView: View {
     let session: CourseSession
+    var onSigned: (() -> Void)? = nil
     @State private var showCheckIn = false
+    @State private var hasSigned = false
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
@@ -115,14 +117,26 @@ struct CourseDetailView: View {
 
             // Sticky CTA
             VStack(spacing: 10) {
-                ForgeButton(
-                    title: "Attendance · Émargement",
-                    systemIcon: "qrcode",
-                    action: { showCheckIn = true }
-                )
-                Text("Closes automatically at **09:15**")
-                    .font(.system(size: 11.5))
-                    .foregroundColor(.forgeMuted)
+                if hasSigned {
+                    HStack(spacing: 10) {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(.forgeSuccess)
+                            .font(.system(size: 20))
+                        Text("Présence enregistrée")
+                            .font(.system(size: 16, weight: .semibold))
+                            .foregroundColor(.forgeSuccess)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 16)
+                    .background(Color(hex: "E6F4EC"))
+                    .cornerRadius(14)
+                } else {
+                    ForgeButton(
+                        title: "Attendance · Émargement",
+                        systemIcon: "qrcode",
+                        action: { showCheckIn = true }
+                    )
+                }
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 12)
@@ -135,7 +149,10 @@ struct CourseDetailView: View {
             )
         }
         .fullScreenCover(isPresented: $showCheckIn) {
-            CheckInFlowView(session: session)
+            CheckInFlowView(session: session, onSuccess: {
+                hasSigned = true
+                onSigned?()
+            })
         }
     }
 
