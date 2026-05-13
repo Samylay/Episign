@@ -1,18 +1,22 @@
 import SwiftUI
+import LocalAuthentication
 
 struct ProfileView: View {
     @EnvironmentObject var auth: AuthService
     @State private var showLogoutAlert = false
-    @State private var faceIDEnabled = true
-    @State private var selectedLanguage = "English (United States)"
+    @State private var biometricsEnrolled = false
 
     var user: EpisignUser? { auth.user }
 
     var promotionLabel: String {
         guard let u = user else { return "EPITA" }
         if let year = u.graduationYear {
-            let major = u.groups.first(where: { $0.kind == "promotion" })?.name ?? "SIGL"
-            return "EPITA · \(major) · Promotion \(year)"
+            let major = u.groups.first(where: { $0.kind == "promotion" })?.name
+                     ?? u.groups.first(where: { $0.kind == "class" })?.name
+            if let major = major {
+                return "EPITA · \(major) · Promotion \(year)"
+            }
+            return "EPITA · Promotion \(year)"
         }
         return "EPITA"
     }
@@ -75,7 +79,9 @@ struct ProfileView: View {
                                 Divider().padding(.leading, 16)
                                 ProfileRow(label: "Email",      value: user?.email  ?? "—",   locked: true)
                                 Divider().padding(.leading, 16)
-                                ProfileRow(label: "Student ID", value: user.map { "\($0.uid)" } ?? "—", locked: true, isLast: true)
+                                ProfileRow(label: "Student ID", value: user.map { "\($0.uid)" } ?? "—", locked: true)
+                                Divider().padding(.leading, 16)
+                                ProfileRow(label: "Attendance Code", value: auth.studentProfile?.cardCode ?? "—", locked: true, isLast: true)
                             }
                         }
                         .padding(.horizontal, 16)
@@ -101,17 +107,9 @@ struct ProfileView: View {
                                 LinkedMethodRow(
                                     icon: "faceid",
                                     title: "Face ID",
-                                    subtitle: "Enrolled · iPhone 15 Pro",
-                                    subtitleColor: .forgeSuccess,
-                                    trailing: AnyView(Toggle("", isOn: $faceIDEnabled).tint(.forgeSuccess).labelsHidden())
-                                )
-                                Divider().padding(.leading, 62)
-                                LinkedMethodRow(
-                                    icon: "wave.3.right",
-                                    title: "NFC Student Card",
-                                    subtitle: "Paired · #A-2814",
-                                    subtitleColor: .forgeSuccess,
-                                    trailing: AnyView(Image(systemName: "chevron.right").font(.system(size: 12)).foregroundColor(.forgeMuted))
+                                    subtitle: biometricsEnrolled ? "Enrolled" : "Not enrolled",
+                                    subtitleColor: biometricsEnrolled ? .forgeSuccess : .forgeMuted,
+                                    trailing: AnyView(EmptyView())
                                 )
                                 Divider().padding(.leading, 62)
                                 LinkedMethodRow(
@@ -121,20 +119,6 @@ struct ProfileView: View {
                                     subtitleColor: .forgeMuted,
                                     trailing: AnyView(Text("Link").font(.system(size: 13, weight: .semibold)).foregroundColor(.forgeBrand))
                                 )
-                            }
-                        }
-                        .padding(.horizontal, 16)
-
-                        // PREFERENCES
-                        SectionHeader("PREFERENCES")
-
-                        ForgeCard {
-                            VStack(spacing: 0) {
-                                ProfileRow(label: "Language",      value: "English (United States)", chevron: true)
-                                Divider().padding(.leading, 16)
-                                ProfileRow(label: "Notifications", value: "Session reminders · 15 min before", chevron: true)
-                                Divider().padding(.leading, 16)
-                                ProfileRow(label: "Appearance",    value: "Match system", chevron: true, isLast: true)
                             }
                         }
                         .padding(.horizontal, 16)
@@ -182,6 +166,11 @@ struct ProfileView: View {
                 Button("Cancel", role: .cancel) {}
             } message: {
                 Text("You will be signed out of all Episign services.")
+            }
+            .task {
+                let ctx = LAContext()
+                var err: NSError?
+                biometricsEnrolled = ctx.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &err)
             }
         }
     }

@@ -59,13 +59,27 @@ class CheckInViewModel: ObservableObject {
 
     // MARK: - Step 2: Teacher code
 
-    func confirmTeacherCode() {
+    func confirmTeacherCode() async {
         guard teacherCode.count == 6, teacherCode.allSatisfy(\.isNumber) else {
             errorMessage = "Code invalide — 6 chiffres requis."
             return
         }
+        isProcessing = true
         errorMessage = nil
-        withAnimation(.spring(response: 0.4)) { step = .studentCode }
+        do {
+            let valid = try await SupabaseService.shared.validateTeacherCode(
+                sessionId: session.id,
+                teacherCode: teacherCode
+            )
+            if valid {
+                withAnimation(.spring(response: 0.4)) { step = .studentCode }
+            } else {
+                errorMessage = "Code formateur incorrect."
+            }
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+        isProcessing = false
     }
 
     // MARK: - Step 3: Student code + submit

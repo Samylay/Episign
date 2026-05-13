@@ -78,7 +78,7 @@ class AuthService: NSObject, ObservableObject {
 
     #if DEBUG
     func signInMock() {
-        user = EpisignUser(
+        let mockUser = EpisignUser(
             login: "samy.layaida",
             email: "samy.layaida@epita.fr",
             firstName: "Samy",
@@ -86,14 +86,24 @@ class AuthService: NSObject, ObservableObject {
             uid: 30272,
             gid: 15000,
             groups: [
-                .init(slug: "prs",                    name: "Paris",                        gid: nil,   kind: "campus"),
-                .init(slug: "ing-app-ing2-s8-prs-dev-d2", name: "Apprentis S8 Paris DEV D2", gid: nil, kind: "class"),
-                .init(slug: "ing",                    name: "Cycle ingénieur",              gid: nil,   kind: "curriculum"),
-                .init(slug: "students",               name: "Étudiants",                   gid: 15000, kind: "other"),
+                .init(slug: "prs",                        name: "Paris",                     gid: nil,   kind: "campus"),
+                .init(slug: "ing-app-ing2-s8-prs-dev-d2", name: "Apprentis S8 Paris DEV D2", gid: nil,   kind: "class"),
+                .init(slug: "ing",                        name: "Cycle ingénieur",            gid: nil,   kind: "curriculum"),
+                .init(slug: "students",                   name: "Étudiants",                 gid: 15000, kind: "other"),
             ],
-            graduationYear: 2027
+            graduationYear: 2027,
+            pictureURL: nil
         )
+        user = mockUser
         isAuthenticated = true
+        Task {
+            studentProfile = try? await SupabaseService.shared.upsertStudent(
+                login: mockUser.login,
+                firstName: mockUser.firstName,
+                lastName: mockUser.lastName,
+                email: mockUser.email
+            )
+        }
     }
     #endif
 

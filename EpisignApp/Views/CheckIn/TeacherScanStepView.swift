@@ -135,7 +135,7 @@ struct TeacherScanStepView: View {
                 }
                 .padding(.horizontal, 24)
 
-                ForgeButton(title: "Continuer", action: { vm.confirmTeacherCode() })
+                ForgeButton(title: "Continuer", action: { Task { await vm.confirmTeacherCode() } })
                     .disabled(vm.teacherCode.count < 6)
                     .padding(.horizontal, 24)
                     .padding(.top, 12)

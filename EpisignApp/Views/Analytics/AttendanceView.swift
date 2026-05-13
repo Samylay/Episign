@@ -1,9 +1,10 @@
 import SwiftUI
 
 struct AttendanceView: View {
-    let summary = AttendanceSummary.sample
-    let records = AttendanceRecord.samples
-    let trend   = AttendanceSummary.weeklyTrend
+    @EnvironmentObject var auth: AuthService
+    @State private var isLoading = true
+    @State private var records: [AttendanceRecord] = []
+    @State private var summary: AttendanceSummary? = nil
 
     @State private var periodIndex = 0
     let periods = ["Semester", "Month", "Week"]
@@ -12,127 +13,114 @@ struct AttendanceView: View {
         NavigationStack {
             ZStack {
                 Color.forgeBg.ignoresSafeArea()
-                ScrollView {
-                    VStack(spacing: 12) {
-                        // Period selector
-                        SegmentedPicker(options: periods, selected: $periodIndex)
-                            .padding(.horizontal, 16)
-                            .padding(.top, 8)
 
-                        // Donut hero
-                        ForgeCard {
-                            HStack(spacing: 18) {
-                                DonutChart(percentage: summary.percentage, size: 128)
-
-                                VStack(alignment: .leading, spacing: 6) {
-                                    Text("\(summary.presentCount) of \(summary.total) sessions attended, including \(summary.late) late arrivals.")
-                                        .font(.system(size: 13))
-                                        .foregroundColor(.forgeInk3)
-                                        .lineSpacing(3)
-
-                                    HStack {
-                                        Text("▲ 2% vs last semester")
-                                            .font(.system(size: 11, weight: .semibold))
-                                            .foregroundColor(.forgeSuccess)
-                                            .padding(.horizontal, 8)
-                                            .padding(.vertical, 6)
-                                            .background(Color(hex: "E6F4EC"))
-                                            .cornerRadius(10)
-                                    }
-                                }
-                            }
-                            .padding(18)
-                        }
-                        .padding(.horizontal, 16)
-
-                        // Breakdown
-                        ForgeCard {
-                            VStack(alignment: .leading, spacing: 12) {
-                                Text("BREAKDOWN")
-                                    .font(.system(size: 11.5, weight: .semibold))
-                                    .kerning(0.8)
-                                    .foregroundColor(.forgeMuted)
-
-                                BreakdownBar(summary: summary)
-                                    .frame(height: 10)
-                                    .cornerRadius(5)
-
-                                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
-                                    BreakdownCell(label: "Present",    count: summary.attended,         total: summary.total, color: .forgeBrand)
-                                    BreakdownCell(label: "Late",       count: summary.late,             total: summary.total, color: .forgeWarn)
-                                    BreakdownCell(label: "Justified",  count: summary.absentJustified,  total: summary.total, color: Color(hex: "4A6A9E"))
-                                    BreakdownCell(label: "Unjustified",count: summary.absentUnjustified,total: summary.total, color: Color(hex: "B8382F"))
-                                }
-                            }
-                            .padding(18)
-                        }
-                        .padding(.horizontal, 16)
-
-                        // 12-week trend
-                        ForgeCard {
-                            VStack(spacing: 14) {
-                                HStack {
-                                    Text("12-WEEK TREND")
-                                        .font(.system(size: 11.5, weight: .semibold))
-                                        .kerning(0.8)
-                                        .foregroundColor(.forgeMuted)
-                                    Spacer()
-                                    Text("avg ")
-                                        .foregroundColor(.forgeInk3)
-                                    + Text("95%")
-                                        .fontWeight(.semibold)
-                                        .foregroundColor(.forgeInk)
-                                }
-                                .font(.system(size: 12))
-
-                                TrendBars(weeks: trend)
-                                    .frame(height: 68)
-
-                                HStack {
-                                    ForEach(["W5","W8","W11","W14","W16"], id: \.self) { label in
-                                        Text(label)
-                                            .font(.system(size: 10))
-                                            .foregroundColor(.forgeMuted)
-                                        if label != "W16" { Spacer() }
-                                    }
-                                }
-                            }
-                            .padding(18)
-                        }
-                        .padding(.horizontal, 16)
-
-                        // Recent sessions
-                        HStack {
-                            Text("Recent sessions")
-                                .font(.system(size: 16, weight: .semibold))
-                                .kerning(-0.3)
-                                .foregroundColor(.forgeInk)
-                            Spacer()
-                            Button("See all") {}
-                                .font(.system(size: 12.5, weight: .semibold))
-                                .foregroundColor(.forgeBrand)
-                        }
-                        .padding(.horizontal, 20)
-                        .padding(.top, 6)
-
-                        ForgeCard {
-                            VStack(spacing: 0) {
-                                ForEach(Array(records.enumerated()), id: \.element.id) { idx, record in
-                                    AttendanceRow(record: record)
-                                    if idx < records.count - 1 {
-                                        Divider().padding(.leading, 68)
-                                    }
-                                }
-                            }
-                        }
-                        .padding(.horizontal, 16)
-                        .padding(.bottom, 32)
-                    }
-                    .padding(.top, 8)
+                if isLoading {
+                    ProgressView()
+                } else if let summary = summary {
+                    attendanceContent(summary: summary)
+                } else {
+                    emptyState
                 }
             }
             .navigationTitle("My attendance")
             .navigationBarTitleDisplayMode(.large)
+        }
+        .task {
+            // Attendance history RPC not yet available — show empty state
+            isLoading = false
+        }
+    }
+
+    // MARK: - Empty state
+
+    private var emptyState: some View {
+        VStack(spacing: 12) {
+            Image(systemName: "chart.bar.xaxis")
+                .font(.system(size: 44))
+                .foregroundColor(.forgeMuted)
+            Text("No attendance data")
+                .font(.system(size: 17, weight: .semibold))
+                .foregroundColor(.forgeInk)
+            Text("Your attendance history will appear here once sessions are recorded.")
+                .font(.system(size: 13))
+                .foregroundColor(.forgeInk3)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 48)
+        }
+    }
+
+    // MARK: - Data view (shown when real data is available)
+
+    private func attendanceContent(summary: AttendanceSummary) -> some View {
+        ScrollView {
+            VStack(spacing: 12) {
+                SegmentedPicker(options: periods, selected: $periodIndex)
+                    .padding(.horizontal, 16)
+                    .padding(.top, 8)
+
+                ForgeCard {
+                    HStack(spacing: 18) {
+                        DonutChart(percentage: summary.percentage, size: 128)
+
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text("\(summary.presentCount) of \(summary.total) sessions attended, including \(summary.late) late arrivals.")
+                                .font(.system(size: 13))
+                                .foregroundColor(.forgeInk3)
+                                .lineSpacing(3)
+                        }
+                    }
+                    .padding(18)
+                }
+                .padding(.horizontal, 16)
+
+                ForgeCard {
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("BREAKDOWN")
+                            .font(.system(size: 11.5, weight: .semibold))
+                            .kerning(0.8)
+                            .foregroundColor(.forgeMuted)
+
+                        BreakdownBar(summary: summary)
+                            .frame(height: 10)
+                            .cornerRadius(5)
+
+                        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
+                            BreakdownCell(label: "Present",     count: summary.attended,          total: summary.total, color: .forgeBrand)
+                            BreakdownCell(label: "Late",        count: summary.late,              total: summary.total, color: .forgeWarn)
+                            BreakdownCell(label: "Justified",   count: summary.absentJustified,   total: summary.total, color: Color(hex: "4A6A9E"))
+                            BreakdownCell(label: "Unjustified", count: summary.absentUnjustified, total: summary.total, color: Color(hex: "B8382F"))
+                        }
+                    }
+                    .padding(18)
+                }
+                .padding(.horizontal, 16)
+
+                if !records.isEmpty {
+                    HStack {
+                        Text("Recent sessions")
+                            .font(.system(size: 16, weight: .semibold))
+                            .kerning(-0.3)
+                            .foregroundColor(.forgeInk)
+                        Spacer()
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.top, 6)
+
+                    ForgeCard {
+                        VStack(spacing: 0) {
+                            ForEach(Array(records.enumerated()), id: \.element.id) { idx, record in
+                                AttendanceRow(record: record)
+                                if idx < records.count - 1 {
+                                    Divider().padding(.leading, 68)
+                                }
+                            }
+                        }
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 32)
+                }
+            }
+            .padding(.top, 8)
         }
     }
 }
@@ -176,7 +164,6 @@ struct DonutChart: View {
 
     private var radius: CGFloat { (size - strokeWidth) / 2 }
     private var circumference: CGFloat { 2 * .pi * radius }
-    private var dashLength: CGFloat { circumference * CGFloat(percentage) / 100 }
 
     var body: some View {
         ZStack {
@@ -217,8 +204,6 @@ struct DonutChart: View {
 
 struct BreakdownBar: View {
     let summary: AttendanceSummary
-
-    private let items: [(CGFloat, Color)] = []
 
     var body: some View {
         GeometryReader { geo in
@@ -265,24 +250,6 @@ struct BreakdownCell: View {
                         .font(.system(size: 12, weight: .medium))
                         .foregroundColor(.forgeMuted)
                 }
-            }
-        }
-    }
-}
-
-// MARK: - Trend bars
-
-struct TrendBars: View {
-    let weeks: [Int]
-
-    var body: some View {
-        HStack(alignment: .bottom, spacing: 6) {
-            ForEach(Array(weeks.enumerated()), id: \.offset) { _, pct in
-                RoundedRectangle(cornerRadius: 3)
-                    .fill(pct < 80 ? Color.forgeWarn : Color.forgeBrand)
-                    .opacity(0.15 + Double(pct) / 100 * 0.85)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: CGFloat(pct) / 100 * 68)
             }
         }
     }

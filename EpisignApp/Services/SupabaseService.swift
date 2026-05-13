@@ -23,6 +23,7 @@ struct AttendanceResult: Codable {
     let error: String?
 }
 
+@MainActor
 class SupabaseService {
     static let shared = SupabaseService()
 
@@ -65,6 +66,16 @@ class SupabaseService {
     func getStudentSessions(login: String) async throws -> [DBSession] {
         struct P: Encodable { let p_forge_login: String }
         return try await rpc("get_student_sessions", params: P(p_forge_login: login))
+    }
+
+    func validateTeacherCode(sessionId: String, teacherCode: String) async throws -> Bool {
+        struct P: Encodable { let p_session_id: String; let p_teacher_code: String }
+        struct R: Decodable { let valid: Bool }
+        let result: R = try await rpc("validate_teacher_code", params: P(
+            p_session_id: sessionId,
+            p_teacher_code: teacherCode
+        ))
+        return result.valid
     }
 
     func submitAttendance(forgeLogin: String, teacherCode: String, studentCode: String, sessionId: String) async throws -> AttendanceResult {

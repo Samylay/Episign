@@ -17,9 +17,10 @@ struct DashboardView: View {
 
     @EnvironmentObject var auth: AuthService
     @State private var filter: DashboardFilter = .today
-    @State private var sessions: [CourseSession] = CourseSession.samples
+    @State private var sessions: [CourseSession] = []
     @State private var selected: CourseSession?
     @State private var showDetail = false
+    @State private var isLoading = false
     @State private var loadingError: String?
 
     var displayedSessions: [CourseSession] {
@@ -76,16 +77,38 @@ struct DashboardView: View {
                         }
 
                         // Session cards
-                        VStack(spacing: 10) {
-                            ForEach(displayedSessions) { session in
-                                SessionCard(session: session, isSelected: selected?.id == session.id) {
-                                    selected = session
-                                    showDetail = true
+                        if isLoading {
+                            ProgressView()
+                                .padding(.top, 48)
+                        } else if displayedSessions.isEmpty {
+                            VStack(spacing: 10) {
+                                Image(systemName: "calendar.badge.clock")
+                                    .font(.system(size: 38))
+                                    .foregroundColor(.forgeMuted)
+                                    .padding(.top, 48)
+                                Text("No sessions")
+                                    .font(.system(size: 16, weight: .semibold))
+                                    .foregroundColor(.forgeInk)
+                                Text("Your scheduled sessions will appear here.")
+                                    .font(.system(size: 13))
+                                    .foregroundColor(.forgeInk3)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.horizontal, 40)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.bottom, 100)
+                        } else {
+                            VStack(spacing: 10) {
+                                ForEach(displayedSessions) { session in
+                                    SessionCard(session: session, isSelected: selected?.id == session.id) {
+                                        selected = session
+                                        showDetail = true
+                                    }
                                 }
                             }
+                            .padding(.horizontal, 16)
+                            .padding(.bottom, 100)
                         }
-                        .padding(.horizontal, 16)
-                        .padding(.bottom, 100)
                     }
                     .padding(.top, 16)
                 }
@@ -132,11 +155,11 @@ struct DashboardView: View {
 
     private func loadSessions() async {
         guard let login = auth.user?.login else { return }
+        isLoading = true
+        defer { isLoading = false }
         do {
             let db = try await SupabaseService.shared.getStudentSessions(login: login)
-            if !db.isEmpty {
-                sessions = db.map { $0.toCourseSession() }
-            }
+            sessions = db.map { $0.toCourseSession() }
         } catch {
             loadingError = error.localizedDescription
         }
